@@ -1,0 +1,56 @@
+class Resource:
+  def __init__(self, name):
+      self.name = name
+      self.available = True
+#Wollman Madiedo Hoyos T00065230
+class User:
+  def __init__(self, name):
+      self.name = name
+
+class PUSPPlatform:
+  def __init__(self):
+      self.resources = []
+
+  def add_resource(self, resource_name):
+      resource = Resource(resource_name)
+      self.resources.append(resource)
+
+  def show_available_resources(self):
+      print("Recursos Disponibles:")
+      for resource in self.resources:
+          status = "Disponible" if resource.available else "No Disponible"
+          print(f"- {resource.name}: {status}")
+
+  def reserve_resource(self, user, resource_name, start_date, end_date):
+      for resource in self.resources:
+          if resource.name == resource_name and resource.available:
+              resource.available = False
+              print(f"El recurso {resource.name} Fue reservado por {user.name} desde {start_date} Hasta la fecha {end_date}!")
+              return
+      print("Lo lamento, el recurso no se encuentra disponible.")
+
+def main():
+  platform = PUSPPlatform()
+
+  # Añade los recursos al sistema
+  platform.add_resource("Computador")
+  platform.add_resource("Bicicleta")
+
+  # Muestra los recursos disponibles
+  platform.show_available_resources()
+
+  user_name = input("Ingrese su nombre: ")
+  resource_name = input("Ingresa el nombre del recurso que quiere reservar: ")
+  start_date = input("Ingresa la fecha y hora de el inicio de plazo de reserva (YYYY-MM-DD HH:MM): ")
+  end_date = input("Ingresa la fecha y hora de el fin del plazo de reserva (YYYY-MM-DD HH:MM): ")
+
+  user = User(user_name)
+
+  # Reserva del recurso
+  platform.reserve_resource(user, resource_name, start_date, end_date)
+
+  # Vuelve a imprimir los recursos disponibles
+  platform.show_available_resources()
+
+if __name__ == "__main__":
+  main()
